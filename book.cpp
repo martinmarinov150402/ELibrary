@@ -19,6 +19,14 @@ bool Book::readFromFile(std::ifstream& in)
     flag = flag && author.readFromFile(in) && title.readFromFile(in) && fileName.readFromFile(in) && shortDesc.readFromFile(in) && ISBN.readFromFile(in);
     return flag;
 }
+String Book::getTitle()
+{
+    return title;
+}
+String Book::getFileName()
+{
+    return fileName;
+}
 bool Book::removeFromFile(String& _title, bool full)
 {
     bool flag = false;

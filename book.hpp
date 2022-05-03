@@ -14,5 +14,7 @@ class Book
         void writeInFile(std::ofstream& out);
         bool readFromFile(std::ifstream& in);
         static bool removeFromFile(String& _title, bool full);
+        String getTitle();
+        String getFileName();
         Book();
 };
