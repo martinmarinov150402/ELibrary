@@ -1,3 +1,6 @@
+#ifndef __Library
+#define __Library
+
 #include "book.hpp"
 
 class Library
@@ -11,8 +14,14 @@ class Library
     public:
         void addBook(Book& book);
         bool removeBook(String& title, bool full);
-        void printBook(int idx, bool lines);
-        bool findBookByCriteria();
+        void printLib();
+        Book* findBookByTitle(String title);
+        Book* findBookByAuthor(String author);
+        Book* findBookByISBN(String ISBN);
+        Book* findBookByDescription(String description);
+        Library getSortedByTitle(bool asc);
+        Library getSortedByAuthor(bool asc);
+        Library getSortedByRating(bool asc);
         Library();
         ~Library();
         Library(Library&);
@@ -20,3 +29,4 @@ class Library
 
 
 };
+#endif

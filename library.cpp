@@ -2,17 +2,6 @@
 #include "string.h"
 #include <fstream>
 
-bool isDelimiter(char c)
-{
-    if(c == '.' || c == '!' || c == '?' || c == ':')
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
 void Library::addBook(Book& book)
 {
     if(size == capacity)
@@ -34,6 +23,130 @@ void Library::addBook(Book& book)
         book.writeInFile(out);
     }
 }
+
+void Library::printLib()
+{
+    for(int i = 0; i < size; i++)
+    {
+        array[i].printInfo();
+    }
+}
+String toLowerCase(String str)
+{
+    for(int i = 0; i < str.Size(); i++)
+    {
+        if(str[i]>='A' && str[i]<='Z')
+        {
+            str[i] -= 32;
+        }
+    }
+    return str;
+}
+Book* Library::findBookByTitle(String title)
+{
+    String title1 = toLowerCase(title);
+    for(int i =  0; i < size; i++)
+    {
+        String cur  = toLowerCase(array[i].getTitle());
+        if(cur == title1)
+        {
+            return &array[i];
+        }
+    }
+    return nullptr;
+}
+Book* Library::findBookByAuthor(String author)
+{
+    String author1 = toLowerCase(author);
+    for(int i =  0; i < size; i++)
+    {
+        String cur  = toLowerCase(array[i].getAuthor());
+        if(cur == author1)
+        {
+            return &array[i];
+        }
+    }
+    return nullptr;
+}
+Library Library::getSortedByTitle(bool asc)
+{
+   Library result = *this;
+   for(int i = 0; i < result.size; i++)
+   {
+       for(int j = i+1; j < result.size; j++)
+       {
+           if((result.array[i].getTitle() > result.array[i].getTitle()) == asc )
+           {
+               //std::swap(result.array[i], result.array[j]);
+                Book tmp = result.array[i];
+                result.array[i] = result.array[j];
+                result.array[j] = tmp;
+           }
+       }
+   }
+   return result;
+}
+Library Library::getSortedByAuthor(bool asc)
+{
+   Library result = *this;
+   for(int i = 0; i < result.size; i++)
+   {
+       for(int j = i+1; j < result.size; j++)
+       {
+           if((result.array[i].getAuthor() > result.array[i].getAuthor()) == asc )
+           {
+                Book tmp = result.array[i];
+                result.array[i] = result.array[j];
+                result.array[j] = tmp;
+           }
+       }
+   }
+   return result;
+}
+Library Library::getSortedByRating(bool asc)
+{
+   Library result = *this;
+   for(int i = 0; i < result.size; i++)
+   {
+       for(int j = i+1; j < result.size; j++)
+       {
+           if((result.array[i].getRating() > result.array[i].getRating()) == asc )
+           {
+                Book tmp = result.array[i];
+                result.array[i] = result.array[j];
+                result.array[j] = tmp;
+           }
+       }
+   }
+   return result;
+}
+Book* Library::findBookByISBN(String ISBN)
+{
+    String ISBN1 = toLowerCase(ISBN);
+    for(int i =  0; i < size; i++)
+    {
+        String cur  = toLowerCase(array[i].getISBN());
+        if(cur == ISBN1)
+        {
+            return &array[i];
+        }
+    }
+    return nullptr;
+}
+Book* Library::findBookByDescription(String description)
+{
+    for(int i = 0; i < size; i++)
+    {
+        String desc1 = toLowerCase(description);
+        String desc2 = toLowerCase(array[i].getDescription());
+        if(desc2.hasSubstring(desc1))
+        {
+            return &array[i];
+        }
+    }
+    return nullptr;
+}
+
 bool Library::removeBook(String& title, bool full)
 {
     int idx = 0;
@@ -87,47 +200,4 @@ Library& Library::operator=(Library& other)
         copy(other);
     }
     return *this;
-}
-void Library::printBook(int idx, bool lines)
-{
-    String tmp;
-    if(idx >= 0 && idx < size)
-    {
-        std::ifstream in;
-        in.open(array[idx].getFileName().getData());
-        if(in)
-        {
-            if(lines)
-            {
-                while(in)
-                {
-                    tmp.readLine(in);
-                    std::cout<<tmp<<"\n";
-                    std::cin.get();
-                }
-                
-            }
-            else
-            {
-                char c;
-                while(in.get(c))
-                {
-                    std::cout<<c;
-                    if(isDelimiter(c))
-                    {
-                        std::cin.get();
-                    }
-                }
-            }
-        }
-        else
-        {
-            std::cout<<"File not fould!";
-        }
-    }
-    else
-    {
-        std::cout<<"Book not found!";
-    }
-    
 }

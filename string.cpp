@@ -55,6 +55,24 @@ String& String::operator=(const char* other)
     strcpy(data,other);
     return *this;
 }
+bool String::hasSubstring(String const& other)
+{
+    return (strstr(data, other.data) != nullptr);
+}
+bool String::operator>(String other)
+{
+    bool flag = true;
+    int bound = std::min(other.size, size);
+    for(int i = 0; i < bound; i++)
+    {
+        if(data[i] < other.data[i])
+        {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
 bool String::readFromFile(std::ifstream& in)
 {
     if(!in)
@@ -86,7 +104,7 @@ bool String::readFromFile(std::ifstream& in)
     }
     return flag;
 }
-char String::operator[](size_t idx)
+char& String::operator[](size_t idx)
 {
     return data[idx];
 }
@@ -210,6 +228,25 @@ bool String::operator==(String& other)
         for(int i = 0; i < size && flag; i++)
         {
             if(data[i] != other.data[i])
+            {
+                flag = false;
+            }
+        }
+    }
+    else
+    {
+        flag = false;
+    }
+    return flag;
+}
+bool String::operator==(const char* other)
+{
+    bool flag = true;
+    if(size == strlen(other))
+    {
+        for(int i = 0; i < size && flag; i++)
+        {
+            if(data[i] != other[i])
             {
                 flag = false;
             }
