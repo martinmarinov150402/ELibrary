@@ -44,10 +44,14 @@ String toLowerCase(String str)
 }
 Book* Library::findBookByTitle(String title)
 {
-    String title1 = toLowerCase(title);
+    String title1;
+    title1 = toLowerCase(title).getData();
     for(int i =  0; i < size; i++)
     {
-        String cur  = toLowerCase(array[i].getTitle());
+        String tit;
+        tit = array[i].getTitle().getData();
+        String cur ;
+        cur = toLowerCase(tit).getData();
         if(cur == title1)
         {
             return &array[i];
@@ -57,10 +61,14 @@ Book* Library::findBookByTitle(String title)
 }
 Book* Library::findBookByAuthor(String author)
 {
-    String author1 = toLowerCase(author);
+    String author1;
+    author1 = toLowerCase(author).getData();
     for(int i =  0; i < size; i++)
     {
-        String cur  = toLowerCase(array[i].getAuthor());
+        String aut;
+        aut = array[i].getAuthor().getData();
+        String cur;
+        cur  = toLowerCase(aut).getData();
         if(cur == author1)
         {
             return &array[i];
@@ -75,7 +83,9 @@ Library Library::getSortedByTitle(bool asc)
    {
        for(int j = i+1; j < result.size; j++)
        {
-           if((result.array[i].getTitle() > result.array[i].getTitle()) == asc )
+           String sec; 
+           sec = result.array[j].getTitle().getData();
+           if((result.array[i].getTitle() > sec) == asc )
            {
                //std::swap(result.array[i], result.array[j]);
                 Book tmp = result.array[i];
@@ -93,7 +103,9 @@ Library Library::getSortedByAuthor(bool asc)
    {
        for(int j = i+1; j < result.size; j++)
        {
-           if((result.array[i].getAuthor() > result.array[i].getAuthor()) == asc )
+           String sec; 
+           sec = result.array[j].getAuthor().getData();
+           if((result.array[i].getAuthor() > sec) == asc )
            {
                 Book tmp = result.array[i];
                 result.array[i] = result.array[j];
@@ -122,10 +134,14 @@ Library Library::getSortedByRating(bool asc)
 }
 Book* Library::findBookByISBN(String ISBN)
 {
-    String ISBN1 = toLowerCase(ISBN);
+    String ISBN1;
+    ISBN1 = toLowerCase(ISBN).getData();
     for(int i =  0; i < size; i++)
     {
-        String cur  = toLowerCase(array[i].getISBN());
+        String isbn;
+        isbn = array[i].getISBN().getData();
+        String cur;
+        cur  = toLowerCase(isbn).getData();
         if(cur == ISBN1)
         {
             return &array[i];
@@ -137,8 +153,12 @@ Book* Library::findBookByDescription(String description)
 {
     for(int i = 0; i < size; i++)
     {
-        String desc1 = toLowerCase(description);
-        String desc2 = toLowerCase(array[i].getDescription());
+        String desc1;
+        desc1 = toLowerCase(description).getData();
+        String d2;
+        d2 = array[i].getDescription().getData();
+        String desc2;
+        desc2 = toLowerCase(d2).getData();
         if(desc2.hasSubstring(desc1))
         {
             return &array[i];
