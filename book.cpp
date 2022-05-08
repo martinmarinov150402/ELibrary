@@ -3,6 +3,17 @@
 #include "string.h"
 #include "book.hpp"
 
+bool isDelimiter(char c)
+{
+    if(c == '.' || c == '!' || c == '?' || c == ':')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 void Book::writeInFile(std::ofstream& out)
 {
     out.write((char*)&rating, sizeof(rating));
@@ -19,6 +30,58 @@ bool Book::readFromFile(std::ifstream& in)
     flag = flag && author.readFromFile(in) && title.readFromFile(in) && fileName.readFromFile(in) && shortDesc.readFromFile(in) && ISBN.readFromFile(in);
     return flag;
 }
+void Book::printInfo()
+{
+    std::cout<<title<<", "<<author<<", ISBN:"<<ISBN<<std::endl;
+}
+void Book::printBook(bool lines)
+{
+    String tmp;
+    std::ifstream in;
+    in.open(getFileName().getData());
+    if(in)
+    {
+        if(lines)
+        {
+            while(in)
+            {
+                tmp.readLine(in);
+                std::cout<<tmp<<"\n";
+                std::cin.get();
+            }
+            
+        }
+        else
+        {
+            char c;
+            while(in.get(c))
+            {
+                std::cout<<c;
+                if(isDelimiter(c))
+                {
+                    std::cin.get();
+                }
+            }
+        }
+    }
+    else
+    {
+        std::cout<<"File not fould!";
+    }
+    
+}
+String Book::getAuthor()
+{
+    return author;
+}
+String Book::getDescription()
+{
+    return shortDesc;
+}
+String Book::getISBN()
+{
+    return ISBN;
+}
 String Book::getTitle()
 {
     return title;
@@ -26,6 +89,10 @@ String Book::getTitle()
 String Book::getFileName()
 {
     return fileName;
+}
+int Book::getRating()
+{
+    return rating;
 }
 bool Book::removeFromFile(String& _title, bool full)
 {

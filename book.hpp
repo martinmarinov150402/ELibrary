@@ -16,5 +16,11 @@ class Book
         static bool removeFromFile(String& _title, bool full);
         String getTitle();
         String getFileName();
+        String getISBN();
+        String getAuthor();
+        String getDescription();
+        int getRating();
+        void printBook(bool lines);
+        void printInfo();
         Book();
 };
