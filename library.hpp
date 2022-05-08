@@ -11,8 +11,8 @@ class Library
         int capacity;
         void copy(Library& other);
    
-    public:
-        void addBook(Book& book);
+    //public:
+        bool addBook(Book& book);
         bool removeBook(String& title, bool full);
         void printLib();
         Book* findBookByTitle(String title);
@@ -22,10 +22,12 @@ class Library
         Library getSortedByTitle(bool asc);
         Library getSortedByAuthor(bool asc);
         Library getSortedByRating(bool asc);
+    public:
         Library();
         ~Library();
         Library(Library&);
         Library& operator=(Library& other);
+    friend class CommandsInterface;
 
 
 };

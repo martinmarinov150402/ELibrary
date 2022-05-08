@@ -128,12 +128,27 @@ bool Book::removeFromFile(String& _title, bool full)
 }
 Book::Book()
 {
+    
+    rating = 1;
+    author = "UNKNOWN";
+    title = "BOOK";
+    fileName = "NOFILE";
+    shortDesc = "IOK";
+
+}
+void Book::readFromCin()
+{
+    std::cout<<"Въведете рейтинг: ";
     std::cin>>rating;
+    std::cin.ignore();
+    std::cout<<"Въведете автор: ";
     author.readLine(std::cin);
+    std::cout<<"Въведете заглавие: ";
     title.readLine(std::cin);
-    std::cin>>fileName;
-    shortDesc.readTillEOF(std::cin);
+    std::cout<<"Въведете име на файл в който е записана книгата: ";
+    fileName.readLine(std::cin);
+    std::cout<<"Въведете ISBN на книгата: ";
     std::cin>>ISBN;
-
-
+    std::cout<<"Въведете кратко описание на книгата: \n";
+    shortDesc.readLine(std::cin);
 }

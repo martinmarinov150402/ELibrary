@@ -22,5 +22,6 @@ class Book
         int getRating();
         void printBook(bool lines);
         void printInfo();
+        void readFromCin();
         Book();
 };

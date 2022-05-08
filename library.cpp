@@ -2,7 +2,7 @@
 #include "string.h"
 #include <fstream>
 
-void Library::addBook(Book& book)
+bool Library::addBook(Book& book)
 {
     if(size == capacity)
     {
@@ -21,7 +21,9 @@ void Library::addBook(Book& book)
     if(out)
     {
         book.writeInFile(out);
+        return out.good();
     }
+    return false;
 }
 
 void Library::printLib()

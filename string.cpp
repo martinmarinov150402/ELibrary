@@ -1,5 +1,6 @@
 #include "string.h"
 #include <cstring>
+#include <limits>
 #include <fstream>
 
 const size_t DEFAULT_CAPACITY = 10;
@@ -158,6 +159,8 @@ std::istream& operator>>(std::istream& in, String& str)
     do
     {
         in.get(sym);
+        if(sym==-1)std::cout<<"HUI"<<std::endl;
+        std::cout<<"CIN BUFFER: "<<sym<<std::endl;
         if(sym!= '\n' && sym != ' ')
         {
             if(str.size == str.capacity)
@@ -185,6 +188,7 @@ void String::readLine(std::istream& in)
     do
     {
         in.get(sym);
+        std::cout<<sym<<std::endl;
         if(sym!= '\n')
         {
             if(size == capacity)
@@ -218,7 +222,9 @@ void String::readTillEOF(std::istream& in)
             delete[] tmp;
         }
         data[size++] = sym;
-    } 
+    }
+    in.ignore();
+    in.clear(); 
 }
 bool String::operator==(String& other)
 {
