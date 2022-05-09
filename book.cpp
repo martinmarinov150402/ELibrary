@@ -43,9 +43,11 @@ void Book::printBook(bool lines)
     {
         if(lines)
         {
+            
             while(in)
             {
                 tmp.readLine(in);
+                if(tmp=="#")break;
                 std::cout<<tmp<<"\n";
                 std::cin.get();
             }
@@ -56,7 +58,7 @@ void Book::printBook(bool lines)
             char c;
             while(in.get(c))
             {
-                std::cout<<c;
+                if(c!='#') std::cout<<c;
                 if(isDelimiter(c))
                 {
                     std::cin.get();
@@ -100,7 +102,7 @@ bool Book::removeFromFile(String& _title, bool full)
     std::ofstream tmpFile;
     tmpFile.open("tmp.dat", std::ios::binary);
     std::ifstream in;
-    in.open("books.dat", std::ios::binary);
+    in.open("library.dat", std::ios::binary);
     if(tmpFile && in)
     {
         Book tmp;
@@ -122,8 +124,8 @@ bool Book::removeFromFile(String& _title, bool full)
     }
     tmpFile.close();
     in.close();
-    remove("books.dat");
-    rename("tmp.dat", "books.dat");
+    remove("library.dat");
+    rename("tmp.dat", "library.dat");
     return flag;
 }
 Book::Book()

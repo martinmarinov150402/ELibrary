@@ -9,6 +9,19 @@
 int main()
 {
     Library lib;
+    Book tmp;
+    std::ifstream libf;
+    libf.open("library.dat",std::ios::binary);
+    if(libf)
+    {
+        //bool flag = false;
+        while(tmp.readFromFile(libf))
+        {
+            lib.addBook(tmp, false);
+            /*flag = true;
+            break;*/
+        }
+    }
     String command;
     CommandsInterface::printHelp();
     while(!(command == "exit"))
@@ -26,7 +39,6 @@ int main()
         s = std::cin.get();
         std::cout<<s<<std::endl;*/
         std::cin>>command;
-        std::cout<<command<<std::endl;
         if(!(command=="exit"))
         {
             CommandsInterface::runCommand(lib, command);      

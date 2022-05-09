@@ -23,21 +23,27 @@ void CommandsInterface::runCommand(Library& lib, String command)
     {
         std::cout<<"Да бъдат ли в нарастващ ред: (1 - да / 0 - не)\n";
         bool asc;
-        std::cin>>asc;
+        String boolf;
+        boolf.readLine(std::cin);
+        asc = boolf[0] - '0';
         lib.getSortedByAuthor(asc).printLib();
     }
     else if(command == "listByTitle")
     {
         std::cout<<"Да бъдат ли в нарастващ ред: (1 - да / 0 - не)\n";
         bool asc;
-        std::cin>>asc;
+        String boolf;
+        boolf.readLine(std::cin);
+        asc = boolf[0] - '0';
         lib.getSortedByTitle(asc).printLib();
     }
     else if(command == "listByRating")
     {
         std::cout<<"Да бъдат ли в нарастващ ред: (1 - да / 0 - не)\n";
         bool asc;
-        std::cin>>asc;
+        String boolf;
+        boolf.readLine(std::cin);
+        asc = boolf[0] - '0';
         lib.getSortedByRating(asc).printLib();
     }
     else if(command == "findBookByTitle")
@@ -48,7 +54,6 @@ void CommandsInterface::runCommand(Library& lib, String command)
         Book* found = lib.findBookByTitle(title);
         if(found != nullptr)
         {
-            found->printInfo();
             std::cout<<found->getDescription()<<std::endl;
         }
         else
@@ -92,7 +97,7 @@ void CommandsInterface::runCommand(Library& lib, String command)
     {
         std::cout<<"Въведете част от описанието: \n";
         String sdesc;
-        sdesc.readTillEOF(std::cin);
+        sdesc.readLine(std::cin);
         Book* found = lib.findBookByDescription(sdesc);
         if(found != nullptr)
         {
@@ -108,7 +113,7 @@ void CommandsInterface::runCommand(Library& lib, String command)
     {   
         Book newBook;
         newBook.readFromCin();
-        bool added = lib.addBook(newBook);
+        bool added = lib.addBook(newBook, true);
         if(added)
         {
             std::cout<<"Книгата е добавена успешно!\n";
@@ -125,7 +130,9 @@ void CommandsInterface::runCommand(Library& lib, String command)
         title.readLine(std::cin);
         bool full;
         std::cout<<"Въведете дали искате изтриването да е пълно: (1 - да, 0 - не): ";
-        std::cin>> full;
+        String boolf;
+        boolf.readLine(std::cin);
+        full = boolf[0] - '0';
         bool success = lib.removeBook(title,full);
         if(success)
         {
@@ -143,8 +150,19 @@ void CommandsInterface::runCommand(Library& lib, String command)
         title.readLine(std::cin);
         std::cout << "Как да се изведе? По редове или по изречения? (1 - по редове, 0 - по изречения): ";
         bool lines;
-        std::cin>>lines;
-        lib.findBookByTitle(title)->printBook(lines);
+        String linesBuff;
+        linesBuff.readLine(std::cin);
+        lines = linesBuff[0] - '0';
+        std::cout<<"Title:"<<title<<std::endl;
+        Book* b = lib.findBookByTitle(title);
+        if(b != nullptr)
+        {
+            lib.findBookByTitle(title)->printBook(lines);
+        }
+        else
+        {
+            std::cout<<"Книгата не е намерена!"<<std::endl;
+        }
     }
     else
     {

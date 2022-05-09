@@ -2,7 +2,7 @@
 #include "string.h"
 #include <fstream>
 
-bool Library::addBook(Book& book)
+bool Library::addBook(Book& book, bool write)
 {
     if(size == capacity)
     {
@@ -16,14 +16,22 @@ bool Library::addBook(Book& book)
         delete[] tmp;
     }
     array[size++] = book;
-    std::ofstream out;
-    out.open("library.dat", std::ios::binary);
-    if(out)
+    if(write)
     {
-        book.writeInFile(out);
-        return out.good();
+        std::ofstream out;
+        out.open("library.dat", std::ios::app | std::ios::binary);
+        if(out)
+        {
+            book.writeInFile(out);
+            return out.good();
+        }
+        return false;
     }
-    return false;
+    else
+    {
+        return true;
+    }
+    
 }
 
 void Library::printLib()
@@ -39,7 +47,7 @@ String toLowerCase(String str)
     {
         if(str[i]>='A' && str[i]<='Z')
         {
-            str[i] -= 32;
+            str[i] += 32;
         }
     }
     return str;

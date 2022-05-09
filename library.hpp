@@ -12,7 +12,7 @@ class Library
         void copy(Library& other);
    
     //public:
-        bool addBook(Book& book);
+        bool addBook(Book& book, bool write);
         bool removeBook(String& title, bool full);
         void printLib();
         Book* findBookByTitle(String title);
@@ -28,6 +28,7 @@ class Library
         Library(Library&);
         Library& operator=(Library& other);
     friend class CommandsInterface;
+    friend int main();
 
 
 };

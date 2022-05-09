@@ -90,8 +90,8 @@ bool String::readFromFile(std::ifstream& in)
     {
         
         flag = flag && in.read(&sym,sizeof(sym));
-        if(sym != '\0')
-        {
+        //if(sym != '\0')
+        //{
             if(size + 1 > capacity)
             {
                 char *tmp = data;
@@ -100,9 +100,11 @@ bool String::readFromFile(std::ifstream& in)
                 strcpy(data,tmp);
             }
             data[size++] = sym;
-        }
+        //}
+
         
     }
+    size--;
     return flag;
 }
 char& String::operator[](size_t idx)
@@ -159,8 +161,6 @@ std::istream& operator>>(std::istream& in, String& str)
     do
     {
         in.get(sym);
-        if(sym==-1)std::cout<<"HUI"<<std::endl;
-        std::cout<<"CIN BUFFER: "<<sym<<std::endl;
         if(sym!= '\n' && sym != ' ')
         {
             if(str.size == str.capacity)
@@ -188,8 +188,7 @@ void String::readLine(std::istream& in)
     do
     {
         in.get(sym);
-        std::cout<<sym<<std::endl;
-        if(sym!= '\n')
+        if(sym!= '\n' && sym >=' ' && sym <= '~')
         {
             if(size == capacity)
             {
@@ -203,6 +202,15 @@ void String::readLine(std::istream& in)
         }
     } 
     while(sym != '\n');
+    if(size == capacity)
+    {
+        char* tmp = data;
+        capacity = capacity * 2;
+        data = new char[capacity];
+        strcpy(data,tmp);
+        delete[] tmp;
+    }
+    data[size] = '\0';
 }
 void String::readTillEOF(std::istream& in)
 {
