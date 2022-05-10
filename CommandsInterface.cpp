@@ -17,6 +17,10 @@ void CommandsInterface::printHelp()
              <<"removeBook - Премахва книга от библиотеката\n"
              <<"printBook - Извежда книга\n";
 }
+CommandsInterface::CommandsInterface()
+{
+    adminPassword = "topSecretPass123";
+}
 void CommandsInterface::runCommand(Library& lib, String command)
 {
     if(command == "listByAuthor")
@@ -111,36 +115,56 @@ void CommandsInterface::runCommand(Library& lib, String command)
     }
     else if(command == "addBook")
     {   
-        Book newBook;
-        newBook.readFromCin();
-        bool added = lib.addBook(newBook, true);
-        if(added)
+        String pass;
+        std::cout<<"Администраторска парола: ";
+        pass.readLine(std::cin);
+        if(pass == adminPassword)
         {
-            std::cout<<"Книгата е добавена успешно!\n";
+            Book newBook;
+            newBook.readFromCin();
+            bool added = lib.addBook(newBook, true);
+            if(added)
+            {
+                std::cout<<"Книгата е добавена успешно!\n";
+            }
+            else
+            {
+                std::cout<<"Грешка: Книгата не можа да бъде добавена.\n";
+            }
         }
         else
         {
-            std::cout<<"Грешка: Книгата не можа да бъде добавена.\n";
+            std::cout<<"Грешна администраторска парола!\n";
         }
     }
     else if(command == "removeBook")
     {
-        std::cout<<"Въведете заглавие на книгата която искате да премахнете: ";
-        String title;
-        title.readLine(std::cin);
-        bool full;
-        std::cout<<"Въведете дали искате изтриването да е пълно: (1 - да, 0 - не): ";
-        String boolf;
-        boolf.readLine(std::cin);
-        full = boolf[0] - '0';
-        bool success = lib.removeBook(title,full);
-        if(success)
+        String pass;
+        std::cout<<"Администраторска парола: ";
+        pass.readLine(std::cin);
+        if(pass == adminPassword)
         {
-            std::cout<<"Книгата е успешно премахната!\n";
+            std::cout<<"Въведете заглавие на книгата която искате да премахнете: ";
+            String title;
+            title.readLine(std::cin);
+            bool full;
+            std::cout<<"Въведете дали искате изтриването да е пълно: (1 - да, 0 - не): ";
+            String boolf;
+            boolf.readLine(std::cin);
+            full = boolf[0] - '0';
+            bool success = lib.removeBook(title,full);
+            if(success)
+            {
+                std::cout<<"Книгата е успешно премахната!\n";
+            }
+            else
+            {
+                std::cout<<"Грешка: Книгата не можа да се премахне!\n";
+            }
         }
         else
         {
-            std::cout<<"Грешка: Книгата не можа да се премахне!\n";
+            std::cout<<"Грешна администраторска парола!\n";
         }
     }
     else if(command == "printBook")

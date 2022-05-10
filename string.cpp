@@ -2,6 +2,7 @@
 #include <cstring>
 #include <limits>
 #include <fstream>
+#include <curses.h>
 
 const size_t DEFAULT_CAPACITY = 10;
 String::~String()

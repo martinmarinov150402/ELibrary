@@ -6,8 +6,11 @@
 
 class CommandsInterface
 {
+    private:
+        String adminPassword;
     public:
-        static void printHelp();
-        static void runCommand(Library& lib, String command);
+        void printHelp();
+        void runCommand(Library& lib, String command);
+        CommandsInterface();
 };
 #endif

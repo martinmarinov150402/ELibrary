@@ -8,6 +8,7 @@
 
 int main()
 {
+    CommandsInterface cli;
     Library lib;
     Book tmp;
     std::ifstream libf;
@@ -23,7 +24,7 @@ int main()
         }
     }
     String command;
-    CommandsInterface::printHelp();
+    cli.printHelp();
     while(!(command == "exit"))
     {
         std::cout<<"Enter command: ";
@@ -41,7 +42,7 @@ int main()
         std::cin>>command;
         if(!(command=="exit"))
         {
-            CommandsInterface::runCommand(lib, command);      
+            cli.runCommand(lib, command);      
         }
     }
 }   
